@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f9;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.plug-container {
+    position: relative;
+}
+
+.plug-wire {
+    position: absolute;
+    top: 50%;
+    left: -50px;
+    width: 50px;
+    height: 4px;
+    background-color: #888;
+    z-index: 1;
+}
+
+.plug {
+    position: absolute;
+    top: 50%;
+    left: -25px;
+    width: 25px;
+    height: 25px;
+    background-color: #666;
+    border-radius: 50%;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.socket {
+    width: 30px;
+    height: 30px;
+    background-color: #aaa;
+    border-radius: 50%;
+    margin-left: 20px;
+}
+
+.button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}

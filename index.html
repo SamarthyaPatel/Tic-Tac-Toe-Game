@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+
+    <!-- Add confetti.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+
+    <script src="https://unpkg.com/peerjs@1.5.3/dist/peerjs.min.js"></script>
+    
+</head>
+
+<body>
+    <header>
+        <h3 style="align-items: baseline; font-weight: bold; text-align: center; margin-top: 3rem; font-size: 1.75rem;"><i class="fa fa-quote-left"></i> Tic Tac Toe <i class="fa fa-quote-right"></i></h3>
+        <div style="height: 1rem;"></div>
+    </header>
+
+    <main>
+
+        <div class="info" id="info">
+            &nbsp;
+            <i class="fa fa-info-circle spin"></i>
+            &nbsp;
+            <span>Peer ID copied!</span>
+            &nbsp;
+        </div>
+
+        <div class="check" id="check">
+            &nbsp;
+            <i class="fa fa-check-circle color"></i> 
+            &nbsp;
+            <span>Connected to the Opponent!</span>
+            &nbsp;
+        </div>
+
+        <div class="warning" id="warning">
+            &nbsp;
+            <i class="fa fa-exclamation-triangle rotate"></i>
+            &nbsp; 
+            <span>Arere! You can't place there, try again!</span>
+            &nbsp;
+        </div>
+
+        <div class="danger" id="danger">
+            &nbsp; 
+            <i class="fa fa-times-circle shine"></i>
+            &nbsp;
+            <span id="danger-note"></span>
+            &nbsp; 
+        </div>
+
+        <div style="height: 1rem;"></div>
+
+        <div class="board" id="board">
+
+            <div class="row r1">
+                <div class="col c1" id="cell-0" onclick="makeMove(0)"></div>                <div class="col c2" id="cell-1" onclick="makeMove(1)"></div>                <div class="col c3" id="cell-2" onclick="makeMove(2)"></div>
+            </div>
+            <div class="row r2">
+                <div class="col c1" id="cell-3" onclick="makeMove(3)"></div>                <div class="col c2" id="cell-4" onclick="makeMove(4)"></div>                <div class="col c3" id="cell-5" onclick="makeMove(5)"></div>
+            </div>
+            <div class="row r3">
+                <div class="col c1" id="cell-6" onclick="makeMove(6)"></div>                <div class="col c2" id="cell-7" onclick="makeMove(7)"></div>                <div class="col c3" id="cell-8" onclick="makeMove(8)"></div>
+            </div>
+
+        </div>
+
+        <div style="height: 7rem;">
+            <p id="status"> Welcome! </p>
+        </div>
+
+        <div class="peer-info">
+            <button onclick="copyPeerID()"> Your Peer ID <img src="share.png" alt="share icon" id="share-icon"> </button>
+            &nbsp; <input type="text" id="peer-id" placeholder="Enter Peer ID" /> &nbsp;
+            <button onclick="connect()"> Connect <img src="link.png" alt="share icon" id="connect-icon"> </button>
+        </div>
+
+        <p id="my-peer-id" style="display: none;"></p>
+
+        <div id="winner-banner" class="winner-banner" style="display: none;">
+            <div class="modal" id="modal">
+                <h2 id="note"></h2>
+                <img src="happyJetha.gif" alt="Happy Jethalal" id="happyJetha">
+                <img src="sadJetha.gif" alt="Sad Jethalal" id="sadJetha">
+                <img src="confusedJetha.gif" alt="Sad Jethalal" id="confusedJetha">
+                <button onclick="resetGame()">Play Again</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
