@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Tic Tac Toe</title>
     <link rel="icon" href="icon.png">
     <link rel="stylesheet" href="style.css">
@@ -17,13 +17,14 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
 
     <script src="https://unpkg.com/peerjs@1.5.3/dist/peerjs.min.js"></script>
+
+    <script src="script.js"></script>
     
 </head>
 
-<body>
+<body onload="startObserving()">
     <header>
-        <h3 style="align-items: baseline; font-weight: bold; text-align: center; margin-top: 3rem; font-size: 1.75rem;"><i class="fa fa-quote-left"></i> Tic Tac Toe <i class="fa fa-quote-right"></i></h3>
-        <div style="height: 1rem;"></div>
+        <h3 id="title"><i class="fa fa-quote-left"></i> Tic Tac Toe <i class="fa fa-quote-right"></i></h3>
     </header>
 
     <main>
@@ -81,12 +82,12 @@
         </div>
 
         <div class="peer-info">
-            <button onclick="copyPeerID()"> Your Peer ID <img src="share.png" alt="share icon" id="share-icon"> </button>
+            <button onclick="copyPeerID()" disabled id="copyButton"> Your Peer ID <img src="share.png" alt="share icon" id="share-icon"> </button>
             &nbsp; <input type="text" id="peer-id" placeholder="Enter Peer ID" /> &nbsp;
             <button onclick="connect()"> Connect <img src="link.png" alt="share icon" id="connect-icon"> </button>
         </div>
 
-        <p id="my-peer-id" style="display: none;"></p>
+        <p id="my-peer-id" style="display: none;">This paragraph will receive an ID value.</p>
 
         <div id="winner-banner" class="winner-banner" style="display: none;">
             <div class="modal" id="modal">
@@ -101,7 +102,5 @@
 
     <footer>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>

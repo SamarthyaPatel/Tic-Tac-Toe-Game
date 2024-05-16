@@ -34,18 +34,37 @@ peer.on('connection', connection => {
     updateTurnMessage();
 });
 
+const observer = new MutationObserver((mutationsList, observer) => {
+    for (const mutation of mutationsList) {
+        if (mutation.type === 'childList' || mutation.type === 'characterData') {
+            console.log('Text content changed:', mutation.target.textContent);
+            document.getElementById("copyButton").disabled = false;
+            observer.disconnect();
+        }
+    }
+});
 
+const config = {
+    characterData: true, // Observe changes to the text content
+    subtree: true,       // Include text nodes
+    childList: true      // Observe changes to child nodes
+};
 
+function startObserving() {
+    const observeElement = document.getElementById('my-peer-id');
+    observer.observe(observeElement, config);
+}
 
-async function copyPeerID() {    
-    navigator.clipboard.writeText(document.getElementById("my-peer-id").textContent);
+async function copyPeerID() {
+    const peerID = document.getElementById("my-peer-id").textContent;
+    navigator.clipboard.writeText(peerID);
 
     document.getElementById("info").classList.add("fade-in");
     await sleep(3000);
     document.getElementById("info").classList.remove("fade-in");
     document.getElementById("info").classList.add("fade-out");
     await sleep(500);
-    document.getElementById("info").classList.remove("fade-out");    
+    document.getElementById("info").classList.remove("fade-out");
 }
 
 function isEmpty(element) {    return element && element.innerHTML.trim() === ""    }
@@ -124,9 +143,8 @@ async function checkForWin(board) {
         const [a, b, c] = combination;
         if (board[a] && board[a] === board[b] && board[a] === board[c]) {
             await sleep(400);
-            isGameOver = true;
             drawWinningLine(combination);
-            await sleep(900);
+            await sleep(1000);
             displayWinnerBanner(board[a]);
             return combination;
         } else {
@@ -135,7 +153,7 @@ async function checkForWin(board) {
                 console.log("Board => ", board)
                 document.getElementById("confusedJetha").style.display = "inline-block";
                 document.getElementById("winner-banner").style.display = "block";
-                document.getElementById("note").innerHTML = "Oh no, that's a draw.";
+                document.getElementById("note").innerHTML = "Heh, that's a draw!";
                 document.getElementById("modal").style.backgroundColor = "#7B68EE";
             }
         }
@@ -232,13 +250,14 @@ function displayWinnerBanner(winner) {
 function sendNotificationToPlay() {
     
     if(rematchData) {
+        console.log("Rematch Received.", waitingProcess)
         conn.send({ type: 'accepted', requester: rematchData.requester, receiver: rematchData.receiver });
-        // console.log("Accepted by ", rematchData.receiver);
+        console.log("Rematch Accepted.", waitingProcess)
         waitingProcess = false;
         updateTurnMessage();
     } else {
         conn.send({ type: 'rematch', requester: myId, receiver: opponentId });
-        // console.log("Request from ", myId);
+        console.log("Rematch Requested.", waitingProcess)
         waitingProcess = true;
         displayWaitingStatus();
     }
@@ -249,13 +268,22 @@ async function displayWaitingStatus() {
         
     while(waitingProcess) {
         document.getElementById("status").textContent = "Waiting.";
-        await sleep(900);
+        await sleep(700);
+        if (!waitingProcess) {
+            break;
+        }
         document.getElementById("status").textContent = "Waiting..";
-        await sleep(900);
+        await sleep(700);
+        if (!waitingProcess) {
+            break;
+        }
         document.getElementById("status").textContent = "Waiting...";
-        await sleep(900);
+        await sleep(700);
+        if (!waitingProcess) {
+            break;
+        }
         document.getElementById("status").textContent = "Waiting....";
-        await sleep(900);
+        await sleep(700);
     }
 
     updateTurnMessage();
@@ -271,7 +299,7 @@ function connect() {
     conn.on('open', () => {
         opponentId = peerId;
         displayConnectionMessage();
-        mySymbol = 'O'; // Assume the second player is 'O'
+        mySymbol = 'O';
         currentPlayer = 'X';
         updateTurnMessage();
     });
@@ -284,14 +312,17 @@ function handleData(data) {
         updateBoard(data.index, data.player);
         currentPlayer = data.player === 'X' ? 'O' : 'X';
         updateTurnMessage();
+        waitingProcess = false;
+        rematchData = null;
     }
 
     if (data.type === 'rematch') {
         rematchData = data;
-        console.log("Rematch from ", data.requester);
+        console.log("Rematch from ", data.requester, waitingProcess);
     }
 
     if (data.type === 'accepted') {
+        console.log("Rematch accepted by ", data.receiver);
         waitingProcess = false;
         updateTurnMessage();
     }
