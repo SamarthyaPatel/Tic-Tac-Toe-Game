@@ -285,7 +285,7 @@ div {
 
 
 #winner-banner {
-    position: absolute;
+    position: fixed;
     /* border: 3px solid white; */
     background: rgba(0, 0, 0, 0.2);
     z-index: 15;
