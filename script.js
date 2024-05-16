@@ -89,26 +89,26 @@ function drawWinningLine(combination) {
 
     if (start == 0 && end == 2 || start == 3 && end == 5 || start == 6 && end == 8) {
         startX = (start % 3) * cell.height + 10;
-        startY = Math.floor(start / 3) * cell.height + (cell.height/2);
+        startY = Math.floor(start / 3) * cell.height + (cell.height/2) + window.scrollY;
         endX = (end % 3) * cell.height + (cell.height);
-        endY = Math.floor(end / 3) * cell.height + (cell.height/2);
+        endY = Math.floor(end / 3) * cell.height + (cell.height/2) + window.scrollY;
 
     } else if (start == 0 && end == 6 || start == 1 && end == 7 || start == 2 && end == 8) {
         startX = (start % 3) * cell.height + (cell.height/2);
-        startY = Math.floor(start / 3) * cell.height + 10;
+        startY = Math.floor(start / 3) * cell.height + 10 + window.scrollY;
         endX = (end % 3) * cell.height + (cell.height/2);
-        endY = Math.floor(end / 3) * cell.height + (cell.height);
+        endY = Math.floor(end / 3) * cell.height + (cell.height) + window.scrollY;
 
     } else if (start == 0) {
         startX = (start % 3) * cell.height + 10;
-        startY = Math.floor(start / 3) * cell.height + 10;
+        startY = Math.floor(start / 3) * cell.height + 10 + window.scrollY;
         endX = (end % 3) * cell.height + (cell.height);
-        endY = Math.floor(end / 3) * cell.height + (cell.height);
+        endY = Math.floor(end / 3) * cell.height + (cell.height) + window.scrollY;
     } else {
         startX = (start % 3) * cell.height + (cell.height);
-        startY = Math.floor(start / 3) * cell.height + 10;
+        startY = Math.floor(start / 3) * cell.height + 10 + window.scrollY;
         endX = (end % 3) * cell.height + 10;
-        endY = Math.floor(end / 3) * cell.height + (cell.height);
+        endY = Math.floor(end / 3) * cell.height + (cell.height) + window.scrollY;
     }
     
     line.setAttribute('x1', startX);
